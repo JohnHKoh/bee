@@ -3,8 +3,10 @@
     "start": "snowpack dev",
     "build": "snowpack build",
     "test": "jest",
-    "format": "prettier --write 'src/**/*.{js,jsx}'",
-    "lint": "prettier --check 'src/**/*.{js,jsx}'"
+    "format": "prettier --write **/*.{js,jsx,ts,tsx,md}",
+    "lint": "prettier --check **/*.{js,jsx,ts,tsx,md}",
+    "eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.10.1",
@@ -14,11 +16,17 @@
     "@snowpack/plugin-webpack": "^1.0.5",
     "@types/css-font-loading-module": "0.0.4",
     "@types/date-fns": "^2.6.0",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0",
+    "eslint-config-preact": "^1.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.8",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.0",
     "rollup-plugin-scss": "^2.5.0",
     "snowpack": "^2.0.0",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.10"
   },
   "dependencies": {
     "@nll/css": "^9.7.0",
@@ -50,5 +58,12 @@
   "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/baetheus/bee/issues"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
+
 }

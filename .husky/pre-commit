@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx lint-staged || (echo "Pre-commit linting failed. Run 'npm run format' and 'npm run eslint' to debug."; false)

@@ -21,4 +21,4 @@ export const SaveCodec: C.Codec<unknown, Save> = C.type({
 export const SaveStateCodec = C.type({
   saves: C.record(SaveCodec),
 });
-export type SaveStateCodec = C.TypeOf<typeof SaveStateCodec>;
+export type SaveStateCodecType = C.TypeOf<typeof SaveStateCodec>;

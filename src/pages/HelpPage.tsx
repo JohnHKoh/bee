@@ -1,9 +1,7 @@
 import { h, FunctionalComponent } from "preact";
 import { DefaultLayout } from "../components/Layouts";
 
-interface HelpPageProps {}
-
-export const HelpPage: FunctionalComponent<HelpPageProps> = () => (
+export const HelpPage: FunctionalComponent = () => (
   <DefaultLayout>
     <article class="fld-col flg-6 pwa-4">
       <section class="fld-col flg-4">

@@ -7,11 +7,11 @@ import { useSettingsStore, changeSettings } from "../stores/settings";
 import { DefaultLayout } from "../components/Layouts";
 import { Button } from "../components/Button";
 
-export const SettingsPage: FunctionalComponent<{}> = () => {
+export const SettingsPage: FunctionalComponent = () => {
   const [{ vibration }, dispatch] = useSettingsStore(identity);
   const handleVibration = useCallback(
     () => dispatch(changeSettings({ vibration: !vibration })),
-    [vibration]
+    [dispatch, vibration]
   );
 
   return (

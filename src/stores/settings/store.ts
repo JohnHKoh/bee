@@ -4,7 +4,11 @@ import { createStore, filterEvery } from "@nll/dux/Store";
 import { actionCreatorFactory } from "@nll/dux/Actions";
 import { useStoreFactory, useDispatchFactory } from "@nll/dux/React";
 
-import { INITIAL_SETTINGS_STATE, SettingsStateCodec } from "./const";
+import {
+  INITIAL_SETTINGS_STATE,
+  SettingsStateCodec,
+  SettingsStateCodecType,
+} from "./const";
 import { SettingsState } from "./models";
 import { createStateRestore, logger } from "../../libs/dux";
 import { notNil } from "../../libs/typeguards";
@@ -14,11 +18,13 @@ const action = actionCreatorFactory("SETTINGS_STORE");
 export const settingsStore = createStore(
   INITIAL_SETTINGS_STATE
 ).addMetaReducers(logger());
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useSettingsStore = useStoreFactory(
   settingsStore,
   useState,
   useEffect
 );
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useSettingsDispatch = useDispatchFactory(
   settingsStore,
   useCallback
@@ -49,7 +55,7 @@ const buzzRunEvery = filterEvery(
 settingsStore.addRunEverys(buzzRunEvery);
 
 /** Storage */
-const storage = createStateRestore<SettingsStateCodec, SettingsState>(
+const storage = createStateRestore<SettingsStateCodecType, SettingsState>(
   SettingsStateCodec,
   "SETTINGS_STORE"
 );

@@ -15,7 +15,7 @@ import { ErrorCard } from "../components/ErrorCard";
 import { LoadingCard } from "../components/LoadingCard";
 import { Button } from "../components/Button";
 
-const toData = (data: GameAndSave[]) => {
+const ToData = (data: GameAndSave[]) => {
   const [showAll, setShowAll] = useState(false);
   const handleShowAll = useCallback(() => setShowAll((s) => !s), [setShowAll]);
 
@@ -25,13 +25,14 @@ const toData = (data: GameAndSave[]) => {
     <section class="fld-col flg-4 ai-stc">
       {games.map(({ game, save, score }) => (
         <Link
+          key={game.id}
           href={`/games/${game.id}`}
           class="fld-row flg-4 jc-spb ai-ctr ce-rev-honey cb-honey-on-hover pwy-4 pwl-5 pwr-4 bwa-1 bra-1 crsr-pointer"
         >
           <span class="fld-row flg-4 ai-ctr fw-u1 fs-u5 ff-head">
             <span class="cf-rev-honey-dark">{game.middle}</span>
             {game.chars.map((char) => (
-              <span>{char}</span>
+              <span key={char}>{char}</span>
             ))}
           </span>
 
@@ -64,7 +65,7 @@ const toData = (data: GameAndSave[]) => {
   );
 };
 
-export const GameListPage: FunctionalComponent<{}> = () => {
+export const GameListPage: FunctionalComponent = () => {
   const [data] = useGameStore(selectAvailableGames);
 
   return (
@@ -74,7 +75,7 @@ export const GameListPage: FunctionalComponent<{}> = () => {
         (error: unknown) => (
           <ErrorCard title="Error Retrieving Games" error={error} />
         ),
-        toData
+        ToData
       )(data)}
     </DefaultLayout>
   );

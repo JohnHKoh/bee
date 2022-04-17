@@ -9,12 +9,12 @@ interface MapProps<T> {
 }
 
 export const Map = <T, _>({ items, filter: f, children }: MapProps<T>) => {
-  let list = Array.isArray(items)
+  const list = Array.isArray(items)
     ? items
     : Object.keys(items)
         .sort()
         .map((k) => items[k]);
-  let filtered = typeof f === "function" ? list.filter(f) : list;
+  const filtered = typeof f === "function" ? list.filter(f) : list;
 
   return <Fragment>{filtered.map(children)}</Fragment>;
 };

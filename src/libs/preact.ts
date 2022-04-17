@@ -1,4 +1,4 @@
-import { useRef, PropRef, Inputs, useEffect, useState } from "preact/hooks";
+import { useRef, PropRef, Inputs, useEffect } from "preact/hooks";
 import { notNil } from "./typeguards";
 
 /** Use Canvas */
@@ -9,7 +9,8 @@ export const useCanvas = (
   const ref = useRef<HTMLCanvasElement>();
 
   useEffect(() => (notNil(ref.current) ? fn(ref.current) : undefined), [
-    ref.current,
+    fn,
+    ref,
     ...inputs,
   ]);
 

@@ -1,7 +1,11 @@
 import * as C from "io-ts/es6/Codec";
 
-import { SettingsState, DetailOptions, WordSortOptions } from "./models";
-import { identity } from "fp-ts/es6/function";
+import {
+  SettingsState,
+  DetailOptions,
+  WordSortOptions,
+  WordSortOptionsType,
+} from "./models";
 
 export const INITIAL_SETTINGS_STATE: SettingsState = {
   vibration: true,
@@ -18,10 +22,10 @@ export const SettingsStateCodec = C.partial({
     WordSortOptions.Alphabetic
   ),
 });
-export type SettingsStateCodec = C.TypeOf<typeof SettingsStateCodec>;
+export type SettingsStateCodecType = C.TypeOf<typeof SettingsStateCodec>;
 
 export const getWordSort = (
-  sort: WordSortOptions
+  sort: WordSortOptionsType
 ): ((words: string[]) => string[]) => {
   switch (sort) {
     case "Found":

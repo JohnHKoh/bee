@@ -21,6 +21,7 @@ const actions = actionCreatorFactory("NOTIFICATIONS");
 export const notificationsStore = createStore(
   INITIAL_NOTIFICATION_STATE
 ).addMetaReducers(logger("SHOW_LOG"));
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useNotifications = useStoreFactory(
   notificationsStore,
   useState,

@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "preact/hooks";
 import { Lens, Getter } from "monocle-ts";
-import { some, none } from "fp-ts/es6/Option";
 import { createStore, filterEvery } from "@nll/dux/Store";
 import { actionCreatorFactory } from "@nll/dux/Actions";
 import { useStoreFactory, useDispatchFactory } from "@nll/dux/React";
@@ -9,24 +8,20 @@ import { caseFn, asyncReducerFactory } from "@nll/dux/Reducers";
 import { asyncExhaustMap } from "@nll/dux/Operators";
 import { isBefore, parseISO, compareDesc, endOfToday } from "date-fns";
 import { createSelector } from "reselect";
-import { from } from "rxjs";
 import { ajax } from "rxjs/ajax";
 
 import { logger, createStateRestore } from "../../libs/dux";
 import { eqInsensitive } from "../../libs/strings";
 import {
   INITIAL_GAME_STATE,
-  badNotice,
-  goodNotice,
   GameAndSave,
   GameState,
   Game,
-  Notice,
   Save,
   foundToScore,
   wordToScore,
 } from "./consts";
-import { GamesCodec, SaveStateCodec } from "./validators";
+import { GamesCodec, SaveStateCodec, SaveStateCodecType } from "./validators";
 import { mapDecode } from "../../libs/ajax";
 import { settingsStore, failureBuzz, successBuzz } from "../settings";
 import {
@@ -42,8 +37,8 @@ const action = actionCreatorFactory("GAME_STORE");
 export const gameStore = createStore(INITIAL_GAME_STATE).addMetaReducers(
   logger()
 );
-export const useGameStore = useStoreFactory(gameStore, useState, useEffect);
-export const useGameDispatch = useDispatchFactory(gameStore, useCallback);
+export const useGameStore = useStoreFactory(gameStore, useState, useEffect); // eslint-disable-line react-hooks/rules-of-hooks
+export const useGameDispatch = useDispatchFactory(gameStore, useCallback); // eslint-disable-line react-hooks/rules-of-hooks
 
 /** Lenses */
 const rootProp = Lens.fromProp<GameState>();
@@ -113,7 +108,7 @@ gameStore
   .dispatch(getGames.pending("/games.20210725.json"));
 
 /** Save Storage - Migrate to simple wireup in one week */
-const { wireupActions } = createStateRestore<SaveStateCodec, GameState>(
+const { wireupActions } = createStateRestore<SaveStateCodecType, GameState>(
   SaveStateCodec,
   "GAME_STORE/SAVES"
 );

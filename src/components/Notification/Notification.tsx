@@ -1,5 +1,4 @@
 import { h, FunctionalComponent } from "preact";
-import { useState } from "preact/hooks";
 import { useTransition, SpringConfig, animated } from "react-spring";
 
 import {

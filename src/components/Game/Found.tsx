@@ -5,7 +5,12 @@ import { isBefore, parseISO, startOfToday } from "date-fns";
 import { If } from "../Control";
 import { Button } from "../Button";
 
-import { DetailOptions, WordSortOptions } from "../../stores/settings";
+import {
+  DetailOptions,
+  DetailOptionsType,
+  WordSortOptions,
+  WordSortOptionsType,
+} from "../../stores/settings";
 import { Game } from "../../stores/game";
 import { eqInsensitive } from "../../libs/strings";
 import { notNil } from "../../libs/typeguards";
@@ -14,10 +19,10 @@ import { isIn } from "../../libs/arrays";
 interface WordListProps {
   words: string[];
   found: string[];
-  sort: WordSortOptions;
+  sort: WordSortOptionsType;
   pangrams: string[];
   showAll: boolean;
-  onSortChange: (sort: WordSortOptions) => void;
+  onSortChange: (sort: WordSortOptionsType) => void;
 }
 
 const WordList: FunctionalComponent<WordListProps> = ({
@@ -34,7 +39,10 @@ const WordList: FunctionalComponent<WordListProps> = ({
         <ul class="fit-grid-3 fs-d2">
           {words.map((word) => (
             <li
-              class={`${found.some(eqInsensitive(word)) ? "ct-rev-honey-dark" : ""} ${pangrams.includes(word) ? "fw-u3" : ""}`}
+              key={word}
+              class={`${
+                found.some(eqInsensitive(word)) ? "ct-rev-honey-dark" : ""
+              } ${pangrams.includes(word) ? "fw-u3" : ""}`}
             >
               {word}
             </li>
@@ -45,6 +53,7 @@ const WordList: FunctionalComponent<WordListProps> = ({
             <div class="fld-row flg-4">
               {Object.keys(WordSortOptions).map((key: any) => (
                 <Button
+                  key={key}
                   class="fls-1-1 fld-row ai-ctr jc-ctr fs-d2 vw-p30"
                   theme={key === sort ? "ct-light" : "ct-lighter"}
                   hover="ct-dark"
@@ -68,7 +77,7 @@ interface StatsProps {
 }
 
 const getStats = (words: string[]) => {
-  let stats: Record<string, number> = {};
+  const stats: Record<string, number> = {};
   words.forEach((word) => {
     if (notNil(stats[word.length])) {
       stats[word.length] = stats[word.length] + 1;
@@ -89,7 +98,7 @@ const getPangrams = (dictionary: string[], chars: string[], middle: string) => {
 const Stats: FunctionalComponent<StatsProps> = ({
   found,
   dictionary,
-  pangrams
+  pangrams,
 }) => {
   const dictStatsArray = useMemo(() => {
     const stats = getStats(dictionary);
@@ -107,7 +116,7 @@ const Stats: FunctionalComponent<StatsProps> = ({
   return (
     <ul class="fs-d1 fld-col flg-2">
       {dictStatsArray.map(({ key, value }) => (
-        <li class="fld-row flg-3 jc-spb ce-rev-honey bwb-1">
+        <li key={key} class="fld-row flg-3 jc-spb ce-rev-honey bwb-1">
           <span>{key} letter words</span>
           <span>
             <strong>{foundStats[key] || 0}</strong>
@@ -127,16 +136,17 @@ const Stats: FunctionalComponent<StatsProps> = ({
     </ul>
   );
 };
+6;
 
 interface FoundProps {
   word: string;
   game: Game;
-  details: DetailOptions;
+  details: DetailOptionsType;
   found: string[];
   score: number;
-  sort: WordSortOptions;
-  onDetailsChange: (details: DetailOptions) => void;
-  onSortChange: (sort: WordSortOptions) => void;
+  sort: WordSortOptionsType;
+  onDetailsChange: (details: DetailOptionsType) => void;
+  onSortChange: (sort: WordSortOptionsType) => void;
   className?: string;
 }
 
@@ -167,14 +177,12 @@ export const Found: FunctionalComponent<FoundProps> = ({
   const words = useMemo(() => list.filter((l) => l.startsWith(word)), [
     list,
     word,
-    sort,
   ]);
 
-  const pangrams = useMemo(() => getPangrams(game.dictionary, game.chars, game.middle), [
-    game.dictionary,
-    game.chars,
-    game.middle,
-  ]);
+  const pangrams = useMemo(
+    () => getPangrams(game.dictionary, game.chars, game.middle),
+    [game.dictionary, game.chars, game.middle]
+  );
 
   return (
     <div class={`fld-col ${className} bwa-1 bra-1 ce-rev-honey ova-hi`}>

@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from "preact";
-import { useCallback, useMemo } from "preact/hooks";
+import { useCallback } from "preact/hooks";
 import { identity } from "fp-ts/es6/function";
 import { datumEither as DE } from "@nll/datum";
 
@@ -16,8 +16,8 @@ import { DefaultLayout } from "../components/Layouts";
 import {
   useSettingsStore,
   changeSettings,
-  DetailOptions,
-  WordSortOptions,
+  DetailOptionsType,
+  WordSortOptionsType,
 } from "../stores/settings";
 import { getWordSort } from "../stores/settings/const";
 
@@ -34,11 +34,12 @@ export const GamePage: FunctionalComponent<GamePageProps> = ({
   const [{ details, sort }, settingsDispatch] = useSettingsStore(identity);
 
   const handleDetailsChange = useCallback(
-    (details: DetailOptions) => settingsDispatch(changeSettings({ details })),
+    (details: DetailOptionsType) =>
+      settingsDispatch(changeSettings({ details })),
     [settingsDispatch]
   );
   const handleSortChange = useCallback(
-    (sort: WordSortOptions) => settingsDispatch(changeSettings({ sort })),
+    (sort: WordSortOptionsType) => settingsDispatch(changeSettings({ sort })),
     [settingsDispatch]
   );
   const handleSubmit = useCallback(

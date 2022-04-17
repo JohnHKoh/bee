@@ -133,7 +133,7 @@ export const Honeycomb: FunctionalComponent<HoneycombProps> = ({
 
   // Force rerender on canvas ref change
   const [ctx, setCtx] = useState(toCtx(ref.current));
-  useEffect(() => setCtx(toCtx(ref.current)), [ref.current]);
+  useEffect(() => setCtx(toCtx(ref.current)), [ref]);
 
   // Needed to scale clicks
   const dpi = window.devicePixelRatio || 1;
@@ -150,7 +150,7 @@ export const Honeycomb: FunctionalComponent<HoneycombProps> = ({
         });
       }
     },
-    [onClickLetter, ctx, hexes]
+    [onClickLetter, ctx, hexes, dpi]
   );
 
   return <canvas class={className} ref={ref} onClick={handleClick} />;

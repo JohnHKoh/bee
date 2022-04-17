@@ -3,7 +3,7 @@ import { useState, useCallback } from "preact/hooks";
 import { MdRefresh, MdArrowBack, MdClear, MdCheck } from "react-icons/md";
 
 import { Game as GameModel } from "../../stores/game";
-import { DetailOptions, WordSortOptions } from "../../stores/settings";
+import { DetailOptionsType, WordSortOptionsType } from "../../stores/settings";
 import { shuffle } from "../../libs/arrays";
 
 import { Button } from "../Button";
@@ -16,10 +16,10 @@ interface GameProps {
   game: GameModel;
   found: string[];
   score: number;
-  details: DetailOptions;
-  sort: WordSortOptions;
-  onDetailsChange?: (details: DetailOptions) => void;
-  onSortChange?: (sort: WordSortOptions) => void;
+  details: DetailOptionsType;
+  sort: WordSortOptionsType;
+  onDetailsChange?: (details: DetailOptionsType) => void;
+  onSortChange?: (sort: WordSortOptionsType) => void;
   onSubmit?: (word: string) => void;
 }
 
@@ -31,9 +31,9 @@ export const Game: FunctionalComponent<GameProps> = ({
   score,
   details,
   sort,
-  onDetailsChange = () => {},
-  onSortChange = () => {},
-  onSubmit = () => {},
+  onDetailsChange = () => undefined,
+  onSortChange = () => undefined,
+  onSubmit = () => undefined,
 }) => {
   const [word, setWord] = useState("");
   const [chars, setChars] = useState(game.chars);
@@ -58,10 +58,7 @@ export const Game: FunctionalComponent<GameProps> = ({
         <Highlight word={word} middle={game.middle} />
       </div>
 
-      <div 
-        class="fld-col ai-ctr vwc-p100"
-        style={{userSelect: 'none'}}
-      >
+      <div class="fld-col ai-ctr vwc-p100" style={{ userSelect: "none" }}>
         <div class="fld-row flg-4 jc-spb">
           <Button
             className="pwx-5 pwy-5 fs-u5"
