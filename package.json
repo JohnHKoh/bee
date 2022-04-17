@@ -3,9 +3,9 @@
     "start": "snowpack dev",
     "build": "snowpack build",
     "test": "jest",
-    "format": "prettier --write **/*.{js,jsx,ts,tsx,md}",
-    "lint": "prettier --check **/*.{js,jsx,ts,tsx,md}",
-    "eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write src/**/*.{js,jsx,ts,tsx}",
+    "lint": "prettier --check src/**/*.{js,jsx,ts,tsx}",
+    "eslint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "prepare": "husky install"
   },
   "devDependencies": {
@@ -60,7 +60,7 @@
     "url": "https://github.com/baetheus/bee/issues"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,md}": [
+    "src/**/*.{js,jsx,ts,tsx,md}": [
       "prettier --write",
       "eslint --fix"
     ]

@@ -11,9 +11,6 @@ module.exports = {
     ],
   },
   settings: {
-    react: {
-      pragma: "h",
-    },
     jest: {
       version: "latest",
     },
